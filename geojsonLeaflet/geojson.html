@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Getting started with leaflet</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+ <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+ integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+ crossorigin=""></script>
+    <style>
+            #firstmap {
+                width: 600px;
+                height: 400px;
+                margin: 0 auto;
+                background-color: grey;
+            }
+    </style>
+</head>
+<body>
+    
+        <div id="firstmap"></div>
+
+    <script>
+
+            const firstmap = L.map("firstmap", {
+                center: [59.1294,11.3537],
+                zoom: 16,
+                scrollWheelZoom: false
+            })
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(firstmap);
+
+    const centerMarker = L.marker([59.1294,11.3537])
+
+    //geojson object, made from geojson.io
+    const geoJsonObject = {
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Employer parking",
+        "content": "40 parking lots"
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              11.35269140475495,
+              59.12845008878509
+            ],
+            [
+              11.352047674590665,
+              59.12844458365663
+            ],
+            [
+              11.352208607131757,
+              59.127728909426736
+            ],
+            [
+              11.352669947082632,
+              59.12739859320018
+            ],
+            [
+              11.35269140475495,
+              59.12845008878509
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+      "title": "Student parking"
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              11.35160022087797,
+              59.13006780020629
+            ],
+            [
+              11.354605256157186,
+              59.130198097666124
+            ],
+            [
+              11.355113149443383,
+              59.130024367609394
+            ],
+            [
+              11.356023124916078,
+              59.13036096879418
+            ],
+            [
+              11.356340558220637,
+              59.130708424611555
+            ],
+            [
+              11.354435958394674,
+              59.13144675651998
+            ],
+            [
+              11.353843416226482,
+              59.131501045002864
+            ],
+            [
+              11.351155814251854,
+              59.1316639099345
+            ],
+            [
+              11.35105000315076,
+              59.131186170604934
+            ],
+            [
+              11.35160022087797,
+              59.13006780020629
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      }
+    }
+  ]
+}
+
+    L.geoJSON(geoJsonObject, {
+        onEachFeature: function (feature, layer) {
+            layer.bindPopup(feature?.properties?.title)
+        }
+    }).addTo(firstmap)
+
+    </script>
+
+</body>
+</html>
